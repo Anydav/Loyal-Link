@@ -94,4 +94,8 @@ termsCheckbox.addEventListener('change', checkFormValidity);
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   alert('✅ Account Created Successfully!');
+
+  setTimeout(() => {
+    window.location.href = `otp.html?email=${encodeURIComponent(emailInput.value)}`;
+  }, 1000);
 });

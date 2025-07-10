@@ -1,0 +1,198 @@
+/* ---------- General Styles ---------- */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  margin: 0;
+  color: #4b5563;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Roboto Serif', serif;
+  font-size: 1.8rem;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  margin-top: 10rem;
+}
+
+p {
+  color: #4b5563;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 120px;
+  height: auto;
+}
+
+/* ---------- Decorative Circles ---------- */
+.top-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.circle-left {
+  width: 360px;
+  height: 450px;
+  background-color: #bfdbfe;
+  border-radius: 50%;
+  position: absolute;
+  top: -280px;
+  left: -20%;
+}
+
+.circle-right {
+  width: 200px;
+  height: 200px;
+  background-color: #e0e0f8;
+  border-radius: 50%;
+  position: absolute;
+  top: -100px;
+  right: -10%;
+}
+
+/* ---------- Form ---------- */
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  color: #1f2937;
+  text-align: left;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"]{
+  width: 100%;
+  padding: 0.75rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  padding-right: 2.5rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle-password:hover {
+  opacity: 1;
+}
+
+.toggle-password.hide {
+  display: none;
+}
+
+/* ---------- Validation Feedback ---------- */
+input.valid {
+  border-color: #16a34a;
+}
+
+input.invalid {
+  border-color: #dc2626;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: none;
+  text-align: left;
+}
+
+.valid-text {
+  color: #16a34a;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: none;
+  text-align: left;
+}
+
+/* ---------- Login Button ---------- */
+#loginbtn {
+  width: 100%;
+  padding: 0.9rem;
+  margin-top: 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#loginbtn:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+#loginbtn:disabled {
+  background-color: #bfdbfe;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* ---------- Additional Text Links ---------- */
+.login-text,
+.login-help {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.login-text a,
+.login-help a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.login-text a:hover,
+.login-help a:hover {
+  text-decoration: underline;
+}

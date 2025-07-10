@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Loyal Link</title>
+  <link rel="stylesheet" href="/styles/log-in.css" />
+</head>
+<body>
+  <!-- Top Decorative Circles -->
+  <div class="top-decoration">
+    <div class="circle circle-left"></div>
+    <div class="circle circle-right"></div>
+  </div>
+
+  <!-- Logo -->
+  <img src="/asset/img/Logo.png" alt="Loyal Link Logo" class="logo" />
+
+  <!-- Main Login Content -->
+  <main>
+    <h1>Welcome Back to Loyal Link</h1>
+    <p>Please log in to your account</p>
+
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required />
+      <div class="error-text" id="email-error">Please enter a valid email ending with .com</div>
+      <div class="valid-text" id="email-valid">Email looks good!</div>
+
+      <label for="password">Password</label>
+      <div class="input-wrapper">
+        <input type="password" id="password" placeholder="Enter password" required />
+        <img src="/asset/img/eyeOff.png" class="toggle-password show" data-target="password" />
+        <img src="/asset/img/eyeon.png" class="toggle-password hide" data-target="password" style="display: none;" />
+      </div>
+      <div class="error-text" id="password-error">Password must be at least 8 characters with letters and numbers</div>
+      <div class="valid-text" id="password-valid">Password looks good!</div>
+
+      <button id="loginbtn" type="submit">Log In</button>
+    </form>
+
+    <p class="login-help"><a href="/forgot-password.html">Forgot Password?</a></p>
+    <p class="login-text">Don't have an account? <a href="/html/createAccount.html">Sign Up</a></p>
+  </main>
+
+  <script src="/scripts/log-in.js"></script>
+</body>
+</html>

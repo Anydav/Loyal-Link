@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP Input</title>
+  <link rel="stylesheet" href="/styles/otp.css">
+</head>
+<body>
+  <div class="container">
+    <h1>We've sent a 6-digit code to your<br>email/phone</h1>
+    <h3>Enter the 6-digit code to verify<br>your email/phone</h3>
+
+    <div class="otp-box">
+      <input type="text" maxlength="1" class="otp" inputmode="numeric" pattern="[0-9]*" />
+      <input type="text" maxlength="1" class="otp" inputmode="numeric" pattern="[0-9]*" />
+      <input type="text" maxlength="1" class="otp" inputmode="numeric" pattern="[0-9]*" />
+      <input type="text" maxlength="1" class="otp" inputmode="numeric" pattern="[0-9]*" />
+      <input type="text" maxlength="1" class="otp" inputmode="numeric" pattern="[0-9]*" />
+      <input type="text" maxlength="1" class="otp" inputmode="numeric" pattern="[0-9]*" />
+    </div>
+
+    <button id="verify">Verify</button>
+
+    <div class="text">
+      <h2>Didn't get it? Resend in <span id="timer">30s</span></h2>
+      <button id="resend" disabled>Resend Code</button>
+    </div>
+  </div>
+
+  <script src="/scripts/otp.js"></script>
+</body>
+</html>

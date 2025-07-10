@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: white;
+  width: 360px;
+  padding: 20px;
+  position: relative;
+  overflow: visible;
+  text-align: center;
+}
+
+.top-circles {
+  position: absolute;
+  top: -200px;
+  left: -27px;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle1 {
+  width: 300px;
+  height: 300px;
+  background-color:  #8ab6f9;
+  z-index: 1;
+  margin-top: -1rem;
+}
+
+.circle2 {
+  width: 250px;
+  height: 250px;
+  background-color:  #e0e0f8;
+  left: -40px;
+  top: 40px;
+  z-index: 1;
+}
+
+.logo-section {
+  margin-top: 100px;
+  position: relative;
+  z-index: 2;
+  top: -200px;
+  left: -100px;
+
+}
+
+.logo {
+width: 120px;
+  height: 120px;
+}
+.brand-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+  margin-top: 10px;
+}
+
+.content {
+  margin-top: -80px;
+}
+
+.content h1 {
+  font-size: 1.5rem;
+  color: #222;
+  margin-bottom: 40px;
+}
+
+.subtitle {
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.begin-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.begin-btn:hover {
+  background-color: #2563eb;
+}
+
+.login-text {
+  font-size: 0.9rem;
+}
+
+.login-text a {
+  color: #1e40af;
+  text-decoration: none;
+}
+
+.login-text a:hover {
+  text-decoration: underline;
+}
