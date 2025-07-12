@@ -113,9 +113,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Prevent default form submit
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Business account created successfully!");
-    // You can add redirect or Supabase logic here
-  });
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Optional: you can do some API or Supabase logic here before redirecting
+
+  // Redirect to dashboard or next step
+  window.location.href = "businesspending.html"; // ← change to your actual page
+});
+
 });

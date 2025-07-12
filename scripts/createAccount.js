@@ -93,9 +93,9 @@ termsCheckbox.addEventListener('change', checkFormValidity);
 // Optional: Prevent real submission
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  alert('✅ Account Created Successfully!');
+setTimeout(() => {
+window.location.href = `otp.html?email=${encodeURIComponent(emailInput.value)}&type=register`;
+}, 500);
 
-  setTimeout(() => {
-    window.location.href = `otp.html?email=${encodeURIComponent(emailInput.value)}`;
-  }, 1000);
+
 });

@@ -32,7 +32,11 @@ checkBox2.addEventListener('change', () => {
 
 continueBtn.addEventListener('click', () => {
   if (!continueBtn.disabled) {
-    alert("Continue clicked");
-    // navigation logic here
+    if (checkBox1.checked) {
+      window.location.href = "createAccount.html";
+    } else if (checkBox2.checked) {
+      window.location.href = "registerBusiness.html";
+    }
   }
 });
+
