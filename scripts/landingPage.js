@@ -1,12 +1,23 @@
-console.log("Button script connected!");
-// Wait for the page to load
 document.addEventListener("DOMContentLoaded", function () {
-  // Get the button element
-  const beginButton = document.querySelector(".begin-btn");
+  const wrapper = document.querySelector(".page-wrapper");
 
-  // Add a click event listener
-  beginButton.addEventListener("click", function () {
-    // Action to perform: Redirect to another page (e.g., signup.html)
-    window.location.href = "signup.html"; // Change to your desired page
+  // Fade in when page loads
+  setTimeout(() => {
+    wrapper.classList.add("fade-in");
+  }, 10); // slight delay to trigger transition
+
+  // Handle buttons or links for transition
+  document.querySelectorAll("a.transition-link").forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const href = this.getAttribute("href");
+
+      wrapper.classList.remove("fade-in");
+      wrapper.classList.add("fade-out");
+
+      setTimeout(() => {
+        window.location.href = "userType.html"; // Change to the desired URL
+      }, 500); // Match transition time
+    });
   });
 });
