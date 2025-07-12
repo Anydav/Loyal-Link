@@ -10,12 +10,12 @@ toggleIcons.forEach(icon => {
 
     if (input.type === 'password') {
       input.type = 'text';
-      showIcon.style.display = 'none';
-      hideIcon.style.display = 'block';
-    } else {
-      input.type = 'password';
       showIcon.style.display = 'block';
       hideIcon.style.display = 'none';
+    } else {
+      input.type = 'password';
+      showIcon.style.display = 'none';
+      hideIcon.style.display = 'block';
     }
   });
 });
