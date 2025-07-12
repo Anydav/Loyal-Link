@@ -1,101 +1,103 @@
-// -------- Show/Hide Password Icons -------- //
-const toggleIcons = document.querySelectorAll('.toggle-password');
+document.addEventListener("DOMContentLoaded", () => {
+  // -------- Supabase Setup -------- //
+  const { createClient } = window.supabase;
+  const supabase = createClient(
+    'https://upcreedrhrazbrbxgkyh.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwY3JlZWRyaHJhemJyYnhna3loIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjEyNDAsImV4cCI6MjA2Nzg5NzI0MH0.PXxOutW_ex3uz_k69sCciEQsqP7AV9nUMl-ROR_AffM'
+  );
 
-toggleIcons.forEach(icon => {
-  icon.addEventListener('click', () => {
-    const inputId = icon.dataset.target;
-    const input = document.getElementById(inputId);
-    const showIcon = icon.parentElement.querySelector('.show');
-    const hideIcon = icon.parentElement.querySelector('.hide');
+  // -------- Show/Hide Password Icons -------- //
+  document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', () => {
+      const input = document.getElementById(icon.dataset.target);
+      const show = icon.parentElement.querySelector('.show');
+      const hide = icon.parentElement.querySelector('.hide');
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      show.style.display = isPassword ? 'none' : 'block';
+      hide.style.display = isPassword ? 'block' : 'none';
+    });
+  });
 
-    if (input.type === 'password') {
-      input.type = 'text';
-      showIcon.style.display = 'none';
-      hideIcon.style.display = 'block';
-    } else {
-      input.type = 'password';
-      showIcon.style.display = 'block';
-      hideIcon.style.display = 'none';
+  // -------- Form Handling -------- //
+  const form = document.getElementById('createAccountForm');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const confirmInput = document.getElementById('confirmPassword');
+  const nameInput = document.getElementById('name');
+  const termsCheckbox = document.getElementById('terms');
+  const createBtn = document.getElementById('createbtn');
+
+  function validateEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email) && email.endsWith('.com');
+  }
+
+  function validatePassword(password) {
+    const pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return pattern.test(password);
+  }
+
+  function checkFormValidity() {
+    const isEmailValid = validateEmail(emailInput.value);
+    const isPasswordValid = validatePassword(passwordInput.value);
+    const isConfirmValid = confirmInput.value === passwordInput.value && confirmInput.value !== '';
+    const isTermsChecked = termsCheckbox.checked;
+
+    // Enable the submit button only when all are valid
+    createBtn.disabled = !(isEmailValid && isPasswordValid && isConfirmValid && isTermsChecked);
+  }
+
+  emailInput.addEventListener('input', checkFormValidity);
+  passwordInput.addEventListener('input', checkFormValidity);
+  confirmInput.addEventListener('input', checkFormValidity);
+  termsCheckbox.addEventListener('change', checkFormValidity);
+
+  // -------- SIGN UP WITH EMAIL -------- //
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const fullName = nameInput.value;
+
+    // Save full name to localStorage for use in otp.html
+    localStorage.setItem('full_name', fullName);
+
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: 'http://localhost:5500/confirm.html' // optional for email link
+        }
+      });
+
+      if (error) {
+        alert('Signup error: ' + error.message);
+        return;
+      }
+
+      window.location.href = `otp.html?email=${encodeURIComponent(email)}&type=register`;
+    } catch (err) {
+      alert('Unexpected error: ' + err.message);
     }
   });
-});
 
-// -------- Form Fields -------- //
-const form = document.getElementById('createAccountForm');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const confirmInput = document.getElementById('confirmPassword');
-const termsCheckbox = document.getElementById('terms');
-const createBtn = document.getElementById('createbtn');
+  // -------- GOOGLE AUTH -------- //
+  const googleBtn = document.getElementById('google-signup');
+  if (googleBtn) {
+    googleBtn.addEventListener('click', async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: 'http://localhost:5500/otp.html?type=google'
+        }
+      });
 
-// Validation Message Elements
-const emailError = document.getElementById('email-error');
-const emailValid = document.getElementById('email-valid');
-const passwordError = document.getElementById('password-error');
-const passwordValid = document.getElementById('password-valid');
-const confirmError = document.getElementById('confirm-error');
-const confirmValid = document.getElementById('confirm-valid');
-
-// -------- Email Validation -------- //
-function validateEmail(email) {
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return pattern.test(email) && email.endsWith('.com');
-}
-
-// -------- Password Validation -------- //
-function validatePassword(password) {
-  const pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return pattern.test(password);
-}
-
-// -------- Check All Conditions -------- //
-function checkFormValidity() {
-  const isEmailValid = validateEmail(emailInput.value);
-  const isPasswordValid = validatePassword(passwordInput.value);
-  const isConfirmValid = confirmInput.value === passwordInput.value && confirmInput.value !== '';
-  const isTermsChecked = termsCheckbox.checked;
-
-  // Email messages
-  if (emailInput.value !== '') {
-    emailValid.style.display = isEmailValid ? 'block' : 'none';
-    emailError.style.display = isEmailValid ? 'none' : 'block';
-    emailInput.classList.toggle('valid', isEmailValid);
-    emailInput.classList.toggle('invalid', !isEmailValid);
+      if (error) {
+        alert('Google login failed: ' + error.message);
+      }
+    });
   }
-
-  // Password messages
-  if (passwordInput.value !== '') {
-    passwordValid.style.display = isPasswordValid ? 'block' : 'none';
-    passwordError.style.display = isPasswordValid ? 'none' : 'block';
-    passwordInput.classList.toggle('valid', isPasswordValid);
-    passwordInput.classList.toggle('invalid', !isPasswordValid);
-  }
-
-  // Confirm password messages
-  if (confirmInput.value !== '') {
-    confirmValid.style.display = isConfirmValid ? 'block' : 'none';
-    confirmError.style.display = isConfirmValid ? 'none' : 'block';
-    confirmInput.classList.toggle('valid', isConfirmValid);
-    confirmInput.classList.toggle('invalid', !isConfirmValid);
-  }
-
-  // Enable button if all pass
-  const allValid = isEmailValid && isPasswordValid && isConfirmValid && isTermsChecked;
-  createBtn.disabled = !allValid;
-}
-
-// -------- Attach Events -------- //
-emailInput.addEventListener('input', checkFormValidity);
-passwordInput.addEventListener('input', checkFormValidity);
-confirmInput.addEventListener('input', checkFormValidity);
-termsCheckbox.addEventListener('change', checkFormValidity);
-
-// Optional: Prevent real submission
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-setTimeout(() => {
-window.location.href = `otp.html?email=${encodeURIComponent(emailInput.value)}&type=register`;
-}, 500);
-
-
 });
