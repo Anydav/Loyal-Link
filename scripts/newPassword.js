@@ -78,7 +78,7 @@ form.addEventListener('submit', (e) => {
     popup.classList.remove('hidden');
 
     setTimeout(() => {
-      window.location.href = '/html/log-in.html'; // Change if needed
+      window.location.href = 'log-in.html'; // Change if needed
     }, 5000);
   }
 });
