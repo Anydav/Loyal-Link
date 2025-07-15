@@ -1,4 +1,5 @@
-*{
+/* Reset and Global Styles */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,21 +12,25 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow-x: hidden;
 }
 
+/* Container */
 .container {
   background-color: white;
   width: 360px;
   padding: 20px;
   position: relative;
-  overflow: visible;
   text-align: center;
+  overflow: visible;
 }
 
+/* Decorative Circles */
 .top-circles {
   position: absolute;
   top: -200px;
   left: -27px;
+  z-index: 0;
 }
 
 .circle {
@@ -36,7 +41,7 @@ body {
 .circle1 {
   width: 300px;
   height: 300px;
-  background-color:  #8ab6f9;
+  background-color: #8ab6f9;
   z-index: 1;
   margin-top: -1rem;
 }
@@ -44,34 +49,31 @@ body {
 .circle2 {
   width: 250px;
   height: 250px;
-  background-color:  #e0e0f8;
+  background-color: #e0e0f8;
   left: -40px;
   top: 40px;
   z-index: 1;
 }
 
+/* Logo Section */
 .logo-section {
-  margin-top: 100px;
   position: relative;
+  margin-top: 100px;
   z-index: 2;
   top: -200px;
   left: -100px;
-
 }
 
 .logo {
-width: 120px;
+  width: 120px;
   height: 120px;
 }
-.brand-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #222;
-  margin-top: 10px;
-}
 
+/* Content */
 .content {
   margin-top: -80px;
+  position: relative;
+  z-index: 3;
 }
 
 .content h1 {
@@ -85,6 +87,7 @@ width: 120px;
   margin-bottom: 30px;
 }
 
+/* Button */
 .begin-btn {
   background-color: #3b82f6;
   color: white;
@@ -94,12 +97,15 @@ width: 120px;
   border-radius: 6px;
   cursor: pointer;
   margin-bottom: 20px;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .begin-btn:hover {
   background-color: #2563eb;
 }
 
+/* Log-in Text */
 .login-text {
   font-size: 0.9rem;
 }
@@ -112,4 +118,3 @@ width: 120px;
 .login-text a:hover {
   text-decoration: underline;
 }
-
