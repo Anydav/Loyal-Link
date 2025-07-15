@@ -40,16 +40,14 @@ body {
   transform: translateX(-50%);
 }
 
-
-
 /* ---------- Main Content ---------- */
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10rem;
-  padding: 1rem;
+  margin-top: 6rem;
+  padding: 3rem 1rem 2rem;
 }
 
 h1 {
@@ -57,7 +55,7 @@ h1 {
   font-size: 2rem;
   font-weight: 700;
   color: #111827;
-  margin:none;
+  margin: 0;
 }
 
 p {
@@ -91,4 +89,36 @@ p {
 
 #dashboard-btn:hover {
   background-color: #1d4ed8;
+}
+
+/* ---------- Mobile Optimization ---------- */
+@media (max-width: 480px) {
+  .logo {
+    width: 75px;
+    top: 0.7rem;
+    left: 0.7rem;
+  }
+
+  main {
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .dash-img {
+    width: 70%;
+    margin-bottom: 3rem;
+  }
+
+  #dashboard-btn {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
 }
