@@ -155,7 +155,7 @@ inputs.forEach((input, index) => {
         email,
         password,
         options: {
-          emailRedirectTo: 'http://localhost:5500/userAccountsuccess.html'
+          emailRedirectTo: 'https://anydav.github.io/Loyal-Link/html/userAccountsuccess.html'
         }
       });
 
@@ -177,7 +177,7 @@ inputs.forEach((input, index) => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'http://localhost:5500/otp.html?type=google'
+          redirectTo: 'https://anydav.github.io/Loyal-Link/html/otp.html?type=google'
         }
       });
 
