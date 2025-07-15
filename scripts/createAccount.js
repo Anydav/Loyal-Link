@@ -1,4 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  // Enable "Enter" key to go to next input
+const inputs = Array.from(document.querySelectorAll(
+  '#createAccountForm input[type="text"], #createAccountForm input[type="email"], #createAccountForm input[type="password"]'
+));
+
+inputs.forEach((input, index) => {
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const nextInput = inputs[index + 1];
+      if (nextInput) {
+        nextInput.focus();
+      } else {
+        // No more inputs – optionally submit the form
+        const createBtn = document.getElementById('createbtn');
+        if (!createBtn.disabled) {
+          createBtn.click(); // or form.submit()
+        }
+      }
+    }
+  });
+});
+
   // -------- Supabase Setup -------- //
   const { createClient } = window.supabase;
   const supabase = createClient(
