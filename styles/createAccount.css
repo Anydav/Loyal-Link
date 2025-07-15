@@ -30,7 +30,10 @@ p, label, .login-text, .checkbox-wrapper {
 
 /* ---------- Google Sign Up Button ---------- */
 #google-signup {
-  display: block;
+  display: flex; /* changed from block */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* space between icon and text */
   width: 100%;
   padding: 0.75rem;
   background-color: transparent;
@@ -45,6 +48,12 @@ p, label, .login-text, .checkbox-wrapper {
 
 #google-signup:hover {
   background-color: rgba(0, 0, 255, 0.05);
+}
+
+/* Add this new class for the image */
+.google-icon {
+  width: 20px;
+  height: 20px;
 }
 
 /* ---------- Divider Text ("or sign up with email") ---------- */
