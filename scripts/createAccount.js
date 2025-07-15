@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // -------- Form Handling -------- //
+  // -------- DOM Elements -------- //
   const form = document.getElementById('createAccountForm');
   const emailInput = document.getElementById('email');
   const passwordInput = document.getElementById('password');
@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const termsCheckbox = document.getElementById('terms');
   const createBtn = document.getElementById('createbtn');
 
+  // -------- Validation Functions -------- //
   function validateEmail(email) {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email) && email.endsWith('.com');
@@ -38,22 +39,84 @@ document.addEventListener("DOMContentLoaded", () => {
     return pattern.test(password);
   }
 
+  // -------- Form Validation -------- //
   function checkFormValidity() {
     const isEmailValid = validateEmail(emailInput.value);
     const isPasswordValid = validatePassword(passwordInput.value);
     const isConfirmValid = confirmInput.value === passwordInput.value && confirmInput.value !== '';
     const isTermsChecked = termsCheckbox.checked;
 
-    // Enable the submit button only when all are valid
+    // Email Feedback
+    const emailError = document.getElementById('email-error');
+    const emailValid = document.getElementById('email-valid');
+
+    if (emailInput.value === "") {
+      emailError.style.display = "none";
+      emailValid.style.display = "none";
+      emailInput.classList.remove("valid", "invalid");
+    } else if (isEmailValid) {
+      emailError.style.display = "none";
+      emailValid.style.display = "block";
+      emailInput.classList.add("valid");
+      emailInput.classList.remove("invalid");
+    } else {
+      emailError.style.display = "block";
+      emailValid.style.display = "none";
+      emailInput.classList.add("invalid");
+      emailInput.classList.remove("valid");
+    }
+
+    // Password Feedback
+    const passwordError = document.getElementById('password-error');
+    const passwordValid = document.getElementById('password-valid');
+
+    if (passwordInput.value === "") {
+      passwordError.style.display = "none";
+      passwordValid.style.display = "none";
+      passwordInput.classList.remove("valid", "invalid");
+    } else if (isPasswordValid) {
+      passwordError.style.display = "none";
+      passwordValid.style.display = "block";
+      passwordInput.classList.add("valid");
+      passwordInput.classList.remove("invalid");
+    } else {
+      passwordError.style.display = "block";
+      passwordValid.style.display = "none";
+      passwordInput.classList.add("invalid");
+      passwordInput.classList.remove("valid");
+    }
+
+    // Confirm Password Feedback
+    const confirmError = document.getElementById('confirm-error');
+    const confirmValid = document.getElementById('confirm-valid');
+
+    if (confirmInput.value === "") {
+      confirmError.style.display = "none";
+      confirmValid.style.display = "none";
+      confirmInput.classList.remove("valid", "invalid");
+    } else if (isConfirmValid) {
+      confirmError.style.display = "none";
+      confirmValid.style.display = "block";
+      confirmInput.classList.add("valid");
+      confirmInput.classList.remove("invalid");
+    } else {
+      confirmError.style.display = "block";
+      confirmValid.style.display = "none";
+      confirmInput.classList.add("invalid");
+      confirmInput.classList.remove("valid");
+    }
+
+    // Enable Submit Button
     createBtn.disabled = !(isEmailValid && isPasswordValid && isConfirmValid && isTermsChecked);
   }
 
+  // -------- Real-Time Validation Events -------- //
   emailInput.addEventListener('input', checkFormValidity);
   passwordInput.addEventListener('input', checkFormValidity);
   confirmInput.addEventListener('input', checkFormValidity);
   termsCheckbox.addEventListener('change', checkFormValidity);
 
-  // -------- SIGN UP WITH EMAIL -------- //
+  // -------- Submit Form (Email Sign Up) -------- //
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -61,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = passwordInput.value;
     const fullName = nameInput.value;
 
-    // Save full name to localStorage for use in otp.html
     localStorage.setItem('full_name', fullName);
 
     try {
@@ -69,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         email,
         password,
         options: {
-          emailRedirectTo: 'http://localhost:5500/confirm.html' // optional for email link
+          emailRedirectTo: 'http://localhost:5500/userAccountsuccess.html'
         }
       });
 
@@ -84,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // -------- GOOGLE AUTH -------- //
+  // -------- Google Auth Sign Up -------- //
   const googleBtn = document.getElementById('google-signup');
   if (googleBtn) {
     googleBtn.addEventListener('click', async () => {

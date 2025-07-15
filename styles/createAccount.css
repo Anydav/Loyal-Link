@@ -14,6 +14,7 @@ h1 {
   text-align: center;
   margin-bottom: 0.5rem;
 }
+
 p {
   text-align: center;
   color: #4b5563;
@@ -24,7 +25,7 @@ p {
 p, label, .login-text, .checkbox-wrapper {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  color: #4b5563; /* brighter than black, but still readable */
+  color: #4b5563;
 }
 
 /* ---------- Google Sign Up Button ---------- */
@@ -71,7 +72,7 @@ form {
   margin: 0 auto;
 }
 
-/* Labels and Inputs */
+/* ---------- Labels and Inputs ---------- */
 label {
   display: block;
   margin-top: 1rem;
@@ -116,41 +117,34 @@ input[type="password"] {
 .toggle-password:hover {
   opacity: 1;
 }
+
 .toggle-password.hide {
   display: none;
 }
 
-/* ---------- Validation Borders ---------- */
-input:valid {
-  border-color: #16a34a;
-}
-
-input:invalid {
-  border-color: #dc2626;
-}
-
-/* Optional: override via JS */
+/* ---------- Validation Borders via JS ---------- */
 input.valid {
-  border-color: #16a34a;
+  border-color: #16a34a !important; /* Green */
 }
 
 input.invalid {
-  border-color: #dc2626;
+  border-color: #dc2626 !important; /* Red */
 }
 
 /* ---------- Validation Messages ---------- */
-.error-text {
-  color: #dc2626;
+.error-text,
+.valid-text {
+  display: none;
   font-size: 0.85rem;
   margin-top: 0.25rem;
-  display: none;
+}
+
+.error-text {
+  color: #dc2626;
 }
 
 .valid-text {
   color: #16a34a;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-  display: none;
 }
 
 /* ---------- Terms Checkbox ---------- */
@@ -160,11 +154,9 @@ input.invalid {
   justify-content: center;
   gap: 0.5rem;
   font-size: 0.85rem;
-  font-family: 'Inter', sans-serif;
-  color: #4b5563;
   text-align: left;
   margin-top: 1.5rem;
-  flex-wrap: wrap; /* in case it's on a small screen */
+  flex-wrap: wrap;
 }
 
 .checkbox-wrapper input[type="checkbox"] {
@@ -187,9 +179,6 @@ input.invalid {
   text-decoration: underline;
 }
 
-
-
-
 /* ---------- Create Account Button ---------- */
 #createbtn {
   width: 100%;
@@ -211,7 +200,7 @@ input.invalid {
 
 #createbtn:disabled {
   background-color: #bfdbfe; /* light blue */
-  color: #6b7280;            /* gray text */
+  color: #6b7280;
   cursor: not-allowed;
   opacity: 0.8;
 }
@@ -231,4 +220,3 @@ input.invalid {
 .login-text a:hover {
   text-decoration: underline;
 }
-
