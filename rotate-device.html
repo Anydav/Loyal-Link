@@ -37,17 +37,17 @@
   </div>
 
   <!-- ✅ Smart redirect logic -->
-  <script>
-    function checkOrientation() {
-      if (window.innerWidth < window.innerHeight) {
-        // User rotated back to portrait mode
-        window.location.href = "/index.html"; // Change to your home or login page
-      }
+<script>
+  function checkOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+      // Back to portrait — go to main page
+      window.location.href = "index.html";
     }
+  }
 
-    // Check on load and every resize
-    window.addEventListener("load", checkOrientation);
-    window.addEventListener("resize", checkOrientation);
-  </script>
+  window.addEventListener("load", checkOrientation);
+  window.addEventListener("resize", checkOrientation);
+</script>
+
 </body>
 </html>
