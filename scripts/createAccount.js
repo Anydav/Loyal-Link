@@ -164,7 +164,12 @@ inputs.forEach((input, index) => {
         return;
       }
 
-      window.location.href = `otp.html?email=${encodeURIComponent(email)}&type=register`;
+      document.getElementById('email-popup').style.display = 'flex';
+
+      document.getElementById('popup-close').addEventListener('click', () => {
+       document.getElementById('email-popup').style.display = 'none';
+});
+
     } catch (err) {
       alert('Unexpected error: ' + err.message);
     }
@@ -177,7 +182,7 @@ inputs.forEach((input, index) => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://anydav.github.io/Loyal-Link/html/otp.html?type=google'
+          redirectTo: 'https://anydav.github.io/Loyal-Link/html/userAccountsuccess.html?type=google'
         }
       });
 

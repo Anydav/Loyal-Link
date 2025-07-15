@@ -229,3 +229,54 @@ input.invalid {
 .login-text a:hover {
   text-decoration: underline;
 }
+
+/* --- Popup Styles --- */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 90%;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.popup-box h2 {
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.popup-box p {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.popup-box button {
+  margin-top: 1.2rem;
+  padding: 0.6rem 1.4rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.popup-box button:hover {
+  background-color: #1d4ed8;
+}
