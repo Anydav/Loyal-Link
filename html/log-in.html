@@ -43,6 +43,67 @@
     <p class="login-text">Don't have an account? <a href="createAccount.html">Sign Up</a></p>
   </main>
 
-  <script src="../scripts/log-in.js"></script>
+  <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  const supabase = createClient(
+    'https://upcreedrhrazbrbxgkyh.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwY3JlZWRyaHJhemJyYnhna3loIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjEyNDAsImV4cCI6MjA2Nzg5NzI0MH0.PXxOutW_ex3uz_k69sCciEQsqP7AV9nUMl-ROR_AffM'
+  );
+
+  const loginForm = document.getElementById('loginForm');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const loginBtn = document.getElementById('loginbtn');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    // Step 1: Sign in using Supabase
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (authError) {
+      alert("❌ Login failed: " + authError.message);
+      return;
+    }
+
+    const userId = authData.user.id;
+
+    // Step 2: Check if user profile exists
+    const { data: userProfile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', userId)
+      .single();
+
+    if (userProfile) {
+      // It's a regular user
+      window.location.href = "/Loyal-Link/html/dashboard-user.html";
+      return;
+    }
+
+    // Step 3: Check if business profile exists
+    const { data: businessProfile } = await supabase
+      .from('business_profiles')
+      .select('email')
+      .eq('email', email)
+      .single();
+
+    if (businessProfile) {
+      // It's a business user
+      window.location.href = "/Loyal-Link/html/dashboard-business.html";
+      return;
+    }
+
+    alert("⚠️ No profile found for this account.");
+  });
+</script>
+
 </body>
 </html>
