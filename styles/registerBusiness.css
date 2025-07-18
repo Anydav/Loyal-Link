@@ -23,8 +23,19 @@ p {
 }
 
 /* ---------- Google Sign Up Button ---------- */
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
 #google-signup {
-  display: block;
+  display: flex; /* <-- switch to flex for horizontal layout */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* space between icon and text */
   width: 100%;
   padding: 0.75rem;
   background-color: transparent;
@@ -35,6 +46,7 @@ p {
   cursor: pointer;
   margin-bottom: 1rem;
   transition: background-color 0.3s ease;
+  font-size: 0.95rem;
 }
 
 #google-signup:hover {
@@ -128,15 +140,14 @@ select {
   display: none;
 }
 
-/* ---------- Validation States ---------- */
-input:valid {
-  border-color: #16a34a;
+/* ---------- Validation States (Class-based override) ---------- */
+input.valid {
+  border-color: #16a34a !important;
 }
 
-input:invalid {
-  border-color: #dc2626;
+input.invalid {
+  border-color: #dc2626 !important;
 }
-
 
 /* ---------- Validation Messages ---------- */
 .error-text {
@@ -225,4 +236,50 @@ input:invalid {
 
 .login-text a:hover {
   text-decoration: underline;
+}
+
+/* ---------- Email Verification Popup (Optional) ---------- */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.popup-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #111827;
+}
+
+.popup-box p {
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  color: #4b5563;
+}
+
+.popup-box button {
+  padding: 0.75rem 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
 }

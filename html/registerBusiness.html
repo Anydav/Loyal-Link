@@ -12,7 +12,10 @@
   <h1>Register Your Business</h1>
   <p>Use Loyal Link to reward loyal customers and grow your brand reach across trusted users and partners</p>
 
-  <button type="button" id="google-signup" onclick="googleSignIn()">Register with Google</button>
+  <button type="button" id="google-signup" onclick="googleSignIn()">
+     <img src="../asset/img/google.png" alt="Google logo" class="google-icon" />
+     Register with Google
+  </button>
 
   <div class="divider">
     <span>or register with Email</span>
@@ -85,6 +88,16 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script src="../scripts/registerBusiness.js"></script>
+  <script  type="module" src="../scripts/registerBusiness.js"></script>
+
+  <!-- Email Verification Popup -->
+<div id="email-popup" class="popup-overlay" style="display: none;">
+  <div class="popup-box">
+    <h2>Almost there!</h2>
+    <p>Check your email to verify your account and complete your sign-up.</p>
+    <button id="popup-close">OK</button>
+  </div>
+</div>
+
 </body>
 </html>
