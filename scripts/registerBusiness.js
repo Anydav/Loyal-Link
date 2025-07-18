@@ -122,6 +122,7 @@ form.addEventListener("submit", async (e) => {
       });
 
     if (dbError) {
+      console.error("DB Error:", dbError);
       alert("❌ Database error: " + dbError.message);
       return;
     }
