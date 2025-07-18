@@ -148,6 +148,7 @@ inputs.forEach((input, index) => {
     const password = passwordInput.value;
     const fullName = nameInput.value;
 
+    localStorage.removeItem("pending_business"); // clear business data
     localStorage.setItem('pending_user', JSON.stringify({
      full_name: fullName,
       email,

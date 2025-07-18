@@ -139,6 +139,7 @@ if (googleBtn) {
     const business_name = nameInput.value;
     const category = categorySelect.value;
 
+    localStorage.removeItem("pending_user"); // clear user data
     localStorage.setItem("pending_business", JSON.stringify({
       business_name,
       category,
