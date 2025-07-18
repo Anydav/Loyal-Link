@@ -101,10 +101,8 @@ form.addEventListener("submit", async (e) => {
   try {
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
-      password,
-      options: {
-        emailRedirectTo: 'https://anydav.github.io/Loyal-Link/html/businesspending.html'
-      }
+      password
+      // No verification email
     });
 
     if (authError) {
@@ -112,16 +110,23 @@ form.addEventListener("submit", async (e) => {
       return;
     }
 
-    // Store data temporarily in localStorage
-    const pendingBusiness = {
+    const { error: dbError } = await supabase.from("business_profiles").insert({
       business_name,
       email,
-      category
-    };
-    localStorage.setItem("pending_business", JSON.stringify(pendingBusiness));
+      category,
+      status: "pending"
+    });
 
-    // Show popup
-    document.getElementById("email-popup").style.display = "flex";
+    if (dbError) {
+      alert("❌ Database error: " + dbError.message);
+      return;
+    }
+
+    // Save for use in businesspending.html
+    localStorage.setItem("pending_business", JSON.stringify({ business_name, email, category }));
+
+    // Go to pending page
+    window.location.href = "https://anydav.github.io/Loyal-Link/html/businesspending.html";
 
   } catch (err) {
     console.error(err);
@@ -132,15 +137,27 @@ form.addEventListener("submit", async (e) => {
 // -------- Google Auth Sign-Up -------- //
 if (googleBtn) {
   googleBtn.addEventListener("click", async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: "https://anydav.github.io/Loyal-Link/html/businesspending.html"
-      }
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google"
+      });
 
-    if (error) {
-      alert("❌ Google Auth failed: " + error.message);
+      if (error) {
+        alert("❌ Google Auth failed: " + error.message);
+        return;
+      }
+
+      // Save dummy business data and go to pending page (you may need a separate logic to get name & category later)
+      const email = ""; // Will be fetched later from user session
+      localStorage.setItem("pending_business", JSON.stringify({ email, business_name: "", category: "" }));
+
+      // Delay navigation slightly to allow session to complete
+      setTimeout(() => {
+        window.location.href = "https://anydav.github.io/Loyal-Link/html/businesspending.html";
+      }, 3000);
+
+    } catch (err) {
+      alert("⚠️ Unexpected error during Google login: " + err.message);
     }
   });
 }
