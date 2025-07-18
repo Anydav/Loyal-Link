@@ -20,5 +20,69 @@
         <img src="../asset/img/gotodash.png" alt="Go to Dashboard" class="dash-img" />
         <button id="dashboard-btn">Go To My Dashboard</button>
     </main>
+
+
+    <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  const supabase = createClient(
+    'https://upcreedrhrazbrbxgkyh.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwY3JlZWRyaHJhemJyYnhna3loIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjEyNDAsImV4cCI6MjA2Nzg5NzI0MH0.PXxOutW_ex3uz_k69sCciEQsqP7AV9nUMl-ROR_AffM' 
+  );
+
+  const dashboardBtn = document.getElementById("dashboard-btn");
+
+  async function insertUserOrBusiness() {
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    const user = sessionData?.session?.user;
+
+    if (!user) {
+      alert("⚠️ Not signed in.");
+      return;
+    }
+
+    // Check if user or business
+    const userData = JSON.parse(localStorage.getItem("pending_user"));
+    const businessData = JSON.parse(localStorage.getItem("pending_business"));
+
+    if (userData) {
+      // Save to profiles table
+      const { error } = await supabase.from("profiles").upsert({
+        id: user.id,
+        full_name: userData.full_name
+      });
+
+      if (error) {
+        alert("❌ Failed to save user profile: " + error.message);
+        return;
+      }
+
+      dashboardBtn.onclick = () => {
+        window.location.href = "/Loyal-Link/html/dashboard-user.html"; // adjust path if needed
+      };
+
+    } else if (businessData) {
+      const { error } = await supabase.from("business_profiles").insert({
+        business_name: businessData.business_name,
+        email: user.email,
+        category: businessData.category
+      });
+
+      if (error) {
+        alert("❌ Failed to save business profile: " + error.message);
+        return;
+      }
+
+      dashboardBtn.onclick = () => {
+        window.location.href = "/Loyal-Link/html/dashboard-business.html"; // adjust path if needed
+      };
+    } else {
+      alert("⚠️ No pending data found in localStorage.");
+    }
+  }
+
+  insertUserOrBusiness();
+</script>
+
 </body>
 </html>

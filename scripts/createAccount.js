@@ -148,7 +148,12 @@ inputs.forEach((input, index) => {
     const password = passwordInput.value;
     const fullName = nameInput.value;
 
-    localStorage.setItem('full_name', fullName);
+    localStorage.setItem('pending_user', JSON.stringify({
+     full_name: fullName,
+      email,
+      role: "user"
+        }));
+
 
     try {
       const { error } = await supabase.auth.signUp({
@@ -179,6 +184,12 @@ inputs.forEach((input, index) => {
   const googleBtn = document.getElementById('google-signup');
   if (googleBtn) {
     googleBtn.addEventListener('click', async () => {
+      const fullName = nameInput.value;
+    localStorage.setItem('pending_user', JSON.stringify({
+      full_name: fullName,
+      role: "user"
+     }));
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
