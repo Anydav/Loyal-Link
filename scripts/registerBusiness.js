@@ -1,125 +1,151 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("businessRegisterForm");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const confirmInput = document.getElementById("confirmPassword");
-  const categorySelect = document.getElementById("category");
-  const termsCheckbox = document.getElementById("terms");
-  const submitBtn = document.getElementById("createbtn");
+// -------- Supabase Setup -------- //
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-  const emailError = document.getElementById("email-error");
-  const emailValid = document.getElementById("email-valid");
-  const passwordError = document.getElementById("password-error");
-  const passwordValid = document.getElementById("password-valid");
-  const confirmError = document.getElementById("confirm-error");
-  const confirmValid = document.getElementById("confirm-valid");
+const supabase = createClient(
+  'https://upcreedrhrazbrbxgkyh.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwY3JlZWRyaHJhemJyYnhna3loIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMjEyNDAsImV4cCI6MjA2Nzg5NzI0MH0.PXxOutW_ex3uz_k69sCciEQsqP7AV9nUMl-ROR_AffM'
+);
 
-  const toggleIcons = document.querySelectorAll(".toggle-password");
+console.log('✅ Supabase initialized');
 
-  function validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.includes(".com");
-  }
+// -------- DOM Elements -------- //
+const form = document.getElementById("businessRegisterForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const confirmInput = document.getElementById("confirmPassword");
+const nameInput = document.getElementById("name");
+const categorySelect = document.getElementById("category");
+const termsCheckbox = document.getElementById("terms");
+const submitBtn = document.getElementById("createbtn");
+const googleBtn = document.getElementById("google-signup");
 
-  function validatePassword(password) {
-    return (
-      password.length >= 8 &&
-      /[A-Za-z]/.test(password) &&
-      /[0-9]/.test(password)
-    );
-  }
+// -------- Validation -------- //
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.includes(".com");
+}
 
-  function updateValidation(input, isValid) {
-    if (isValid) {
-      input.classList.remove("invalid");
-      input.classList.add("valid");
-    } else {
-      input.classList.remove("valid");
-      input.classList.add("invalid");
-    }
-  }
+function validatePassword(password) {
+  return password.length >= 8 && /[A-Za-z]/.test(password) && /[0-9]/.test(password);
+}
 
-  function checkFormStatus() {
-    const emailIsValid = validateEmail(emailInput.value);
-    const passwordIsValid = validatePassword(passwordInput.value);
-    const confirmIsValid = confirmInput.value === passwordInput.value && passwordIsValid;
-    const categoryIsValid = categorySelect.value.trim() !== "";
-    const termsIsChecked = termsCheckbox.checked;
+function updateValidation(input, isValid) {
+  input.classList.toggle("valid", isValid);
+  input.classList.toggle("invalid", !isValid);
+}
 
-    // Enable or disable button
-    if (emailIsValid && passwordIsValid && confirmIsValid && categoryIsValid && termsIsChecked) {
-      submitBtn.disabled = false;
-    } else {
-      submitBtn.disabled = true;
-    }
-  }
+function checkFormStatus() {
+  const emailIsValid = validateEmail(emailInput.value);
+  const passwordIsValid = validatePassword(passwordInput.value);
+  const confirmIsValid = confirmInput.value === passwordInput.value && passwordIsValid;
+  const categoryIsValid = categorySelect.value.trim() !== "";
+  const termsIsChecked = termsCheckbox.checked;
 
-  // --- Email Validation ---
-  emailInput.addEventListener("input", () => {
-    const isValid = validateEmail(emailInput.value);
-    updateValidation(emailInput, isValid);
-    emailError.style.display = isValid ? "none" : "block";
-    emailValid.style.display = isValid ? "block" : "none";
-    checkFormStatus();
+  submitBtn.disabled = !(emailIsValid && passwordIsValid && confirmIsValid && categoryIsValid && termsIsChecked);
+}
+
+// -------- Events for Validation -------- //
+emailInput.addEventListener("input", () => {
+  const isValid = validateEmail(emailInput.value);
+  updateValidation(emailInput, isValid);
+  document.getElementById("email-error").style.display = isValid ? "none" : "block";
+  document.getElementById("email-valid").style.display = isValid ? "block" : "none";
+  checkFormStatus();
+});
+
+passwordInput.addEventListener("input", () => {
+  const isValid = validatePassword(passwordInput.value);
+  updateValidation(passwordInput, isValid);
+  document.getElementById("password-error").style.display = isValid ? "none" : "block";
+  document.getElementById("password-valid").style.display = isValid ? "block" : "none";
+  checkFormStatus();
+});
+
+confirmInput.addEventListener("input", () => {
+  const match = confirmInput.value === passwordInput.value && passwordInput.value.length > 0;
+  updateValidation(confirmInput, match);
+  document.getElementById("confirm-error").style.display = match ? "none" : "block";
+  document.getElementById("confirm-valid").style.display = match ? "block" : "none";
+  checkFormStatus();
+});
+
+categorySelect.addEventListener("change", () => {
+  const isValid = categorySelect.value.trim() !== "";
+  updateValidation(categorySelect, isValid);
+  checkFormStatus();
+});
+
+termsCheckbox.addEventListener("change", checkFormStatus);
+
+// -------- Show/Hide Password -------- //
+document.querySelectorAll(".toggle-password").forEach(icon => {
+  icon.addEventListener("click", () => {
+    const input = document.getElementById(icon.dataset.target);
+    const isPassword = input.type === "password";
+    input.type = isPassword ? "text" : "password";
+
+    const icons = document.querySelectorAll(`img[data-target='${icon.dataset.target}']`);
+    icons.forEach(i => i.classList.toggle("hide"));
+    icons.forEach(i => i.classList.toggle("show"));
   });
+});
 
-  // --- Password Validation ---
-  passwordInput.addEventListener("input", () => {
-    const isValid = validatePassword(passwordInput.value);
-    updateValidation(passwordInput, isValid);
-    passwordError.style.display = isValid ? "none" : "block";
-    passwordValid.style.display = isValid ? "block" : "none";
-    checkFormStatus();
-  });
-
-  // --- Confirm Password Validation ---
-  confirmInput.addEventListener("input", () => {
-    const match = confirmInput.value === passwordInput.value && passwordInput.value.length > 0;
-    updateValidation(confirmInput, match);
-    confirmError.style.display = match ? "none" : "block";
-    confirmValid.style.display = match ? "block" : "none";
-    checkFormStatus();
-  });
-
-  // --- Business Category Dropdown ---
-  categorySelect.addEventListener("change", () => {
-    const isValid = categorySelect.value.trim() !== "";
-    updateValidation(categorySelect, isValid);
-    checkFormStatus();
-  });
-
-  // --- Terms Checkbox ---
-  termsCheckbox.addEventListener("change", checkFormStatus);
-
-  // --- Password Eye Toggle ---
-  toggleIcons.forEach((icon) => {
-    icon.addEventListener("click", () => {
-      const inputId = icon.dataset.target;
-      const input = document.getElementById(inputId);
-      const allIcons = document.querySelectorAll(`img[data-target='${inputId}']`);
-      if (input.type === "password") {
-        input.type = "text";
-        allIcons.forEach((i) => {
-          i.classList.toggle("show");
-          i.classList.toggle("hide");
-        });
-      } else {
-        input.type = "password";
-        allIcons.forEach((i) => {
-          i.classList.toggle("show");
-          i.classList.toggle("hide");
-        });
-      }
-    });
-  });
-
-  // Prevent default form submit
-form.addEventListener("submit", (e) => {
+// -------- Form Submission: Email Signup -------- //
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Optional: you can do some API or Supabase logic here before redirecting
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  const business_name = nameInput.value;
+  const category = categorySelect.value;
 
-  // Redirect to dashboard or next step
-  window.location.href = "businesspending.html"; // ← change to your actual page
+  try {
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: 'https://anydav.github.io/Loyal-Link/html/businesspending.html'
+      }
+    });
+
+    if (authError) {
+      alert("❌ Sign-up failed: " + authError.message);
+      return;
+    }
+
+    const { error: dbError } = await supabase
+      .from("business_profiles")
+      .insert({
+        business_name,
+        email,
+        category,
+        status: "pending"
+      });
+
+    if (dbError) {
+      alert("❌ Database error: " + dbError.message);
+      return;
+    }
+
+    document.getElementById("email-popup").style.display = "flex";
+
+  } catch (err) {
+    console.error(err);
+    alert("⚠️ Unexpected error: " + err.message);
+  }
 });
 
-});
+// -------- Google Auth Sign-Up -------- //
+if (googleBtn) {
+  googleBtn.addEventListener("click", async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: "https://anydav.github.io/Loyal-Link/html/businesspending.html"
+      }
+    });
+
+    if (error) {
+      alert("❌ Google Auth failed: " + error.message);
+    }
+  });
+}
