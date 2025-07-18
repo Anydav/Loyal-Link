@@ -112,21 +112,15 @@ form.addEventListener("submit", async (e) => {
       return;
     }
 
-    const { error: dbError } = await supabase
-      .from("business_profiles")
-      .insert({
-        business_name,
-        email,
-        category,
-        status: "pending"
-      });
+    // Store data temporarily in localStorage
+    const pendingBusiness = {
+      business_name,
+      email,
+      category
+    };
+    localStorage.setItem("pending_business", JSON.stringify(pendingBusiness));
 
-    if (dbError) {
-      console.error("DB Error:", dbError);
-      alert("❌ Database error: " + dbError.message);
-      return;
-    }
-
+    // Show popup
     document.getElementById("email-popup").style.display = "flex";
 
   } catch (err) {
